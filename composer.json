@@ -1,0 +1,22 @@
+{
+    "name": "knpuniversity/behat",
+    "authors": [
+        {
+            "name": "Ryan Weaver",
+            "email": "ryan@thatsquality.com"
+        }
+    ],
+    "require": {
+        "symfony/symfony": "^2.7",
+        "twig/twig": "^1.22",
+        "sensio/framework-extra-bundle": "^3.0",
+        "doctrine/doctrine-bundle": "^1.5",
+        "doctrine/orm": "^2.5",
+        "doctrine/doctrine-fixtures-bundle": "^2.2"
+    },
+    "autoload": {
+        "psr-0": {
+            "": "src/"
+        }
+    }
+}
