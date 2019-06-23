@@ -25,3 +25,5 @@ Feature: Product admin area
     And I fill in "Description" with "Have your raptor chew on this instead"
     And I press "save"
     Then I should see "product created"
+    And I should see "velociraptorToy"
+    Then I should not see "Anonymous"

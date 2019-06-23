@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,6 +29,17 @@ class ProductAdminController extends Controller
     public function newAction(Request $request)
     {
         if ($request->isMethod('POST')) {
+            $product = new Product();
+            $product->setName($request->get('name'));
+            $product->setPrice($request->get('price'));
+            $product->setDescription($request->get('description'));
+
+            $product->setAuthor($this->getUser());
+
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($product);
+            $manager->flush();
+
             $this->addFlash('success', 'product created');
 
             return $this->redirectToRoute('product_list');
