@@ -11,7 +11,6 @@ require_once __DIR__.'/../../vendor/phpunit/phpunit/src/Framework/Assert/Functio
  */
 class FeatureContext extends RawMinkContext implements Context, SnippetAcceptingContext
 {
-    private $output;
     /**
      * Initializes context.
      *
@@ -21,64 +20,6 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
      */
     public function __construct()
     {
-    }
-
-    /**
-     * @BeforeScenario
-     */
-    public function moveIntoTestDir()
-    {
-        if (!is_dir('test')) {
-            mkdir('test');
-        }
-        chdir('test');
-    }
-
-    /**
-     * @AfterScenario
-     */
-    public function moveOutOfTestDir()
-    {
-        chdir('..');
-        if (is_dir('test')) {
-            system('rm -r '.realpath('test'));
-        }
-    }
-
-    /**
-     * @Given there is a file named :filename
-     */
-    public function thereIsAFileNamed($filename)
-    {
-        touch($filename);
-    }
-
-    /**
-     * @When I run :command
-     */
-    public function iRun($command)
-    {
-        $this->output = shell_exec($command);
-    }
-
-    /**
-     * @Then I should see :string in the output
-     */
-    public function iShouldSeeInTheOutput($string)
-    {
-        assertContains(
-            $string,
-            $this->output,
-            sprintf('Did not see %s in the output %s', $string, $this->output)
-        );
-    }
-
-    /**
-     * @Given there is a dir named :dir
-     */
-    public function thereIsADirNamed($dir)
-    {
-        mkdir($dir);
     }
 
     /**
