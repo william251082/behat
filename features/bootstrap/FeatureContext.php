@@ -111,6 +111,17 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
     }
 
     /**
+     * @When I wait for the modal to load
+     */
+    public function iWaitForTheModalToLoad()
+    {
+        $this->getSession()->wait(
+            5000,
+            "$('.modal:visible').length"
+        );
+    }
+
+    /**
      * @Then I should see :count products
      */
     public function iShouldSeeProducts($count)

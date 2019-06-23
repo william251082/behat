@@ -1,7 +1,4 @@
-{% extends 'layout.html.twig' %}
-
-{% block body %}
-    <form action="{{ path('product_new') }}" method="POST">
+ <form action="{{ path('product_new') }}" method="POST">
         <fieldset>
             <legend>New Product</legend>
 
@@ -21,4 +18,3 @@
 
         <button type="submit" class="btn btn-primary" name="save">Save</button>
     </form>
-{% endblock %}
