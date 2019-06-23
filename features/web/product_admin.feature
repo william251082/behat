@@ -22,6 +22,7 @@ Feature: Product admin area
     And I am on "/admin/products"
     When I click "New Product"
     And I wait for the modal to load
+    And break
     And I fill in "Name" with "velociraptorToy"
     And I fill in "Price" with "20"
     And I fill in "Description" with "Have your raptor chew on this instead"
@@ -29,3 +30,5 @@ Feature: Product admin area
     Then I should see "product created"
     And I should see "velociraptorToy"
     Then I should not see "Anonymous"
+
+#    behatch context library
