@@ -4,6 +4,8 @@ use AppBundle\Entity\User;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\MinkExtension\Context\RawMinkContext;
+use Behat\Symfony2Extension\Context\KernelDictionary;
+use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 
 require_once __DIR__.'/../../vendor/phpunit/phpunit/src/Framework/Assert/Functions.php';
 
@@ -12,7 +14,7 @@ require_once __DIR__.'/../../vendor/phpunit/phpunit/src/Framework/Assert/Functio
  */
 class FeatureContext extends RawMinkContext implements Context, SnippetAcceptingContext
 {
-    private static $container;
+    use KernelDictionary;
 
     /**
      * Initializes context.
@@ -30,23 +32,9 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
      */
     public function clearData()
     {
-        $manager = self::$container->get('doctrine')->getManager();
-        $manager->createQuery('DELETE FROM AppBundle:Product')->execute();
-        $manager->createQuery('DELETE FROM AppBundle:User')->execute();
-    }
-
-    /**
-     * @BeforeSuite
-     */
-    public static function bootstrapSymfony()
-    {
-        require __DIR__.'/../../app/autoload.php';
-        require __DIR__.'/../../app/AppKernel.php';
-
-        $kernel = new AppKernel('test', true);
-        $kernel->boot();
-
-        self::$container = $kernel->getContainer();
+        $manager = $this->getContainer()->get('doctrine')->getManager();
+        $purger = new ORMPurger($manager);
+        $purger->purge();
     }
 
     /**
@@ -86,7 +74,7 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
         $user->setPlainPassword($password);
         $user->setRoles(['ROLE_ADMIN']);
 
-        $manager = self::$container->get('doctrine')
+        $manager = $this->getContainer()->get('doctrine')
             ->getManager();
         $manager->persist($user);
         $manager->flush();
