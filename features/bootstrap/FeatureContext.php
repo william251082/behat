@@ -26,6 +26,16 @@ class FeatureContext extends RawMinkContext implements Context, SnippetAccepting
     }
 
     /**
+     * @BeforeScenario
+     */
+    public function clearData()
+    {
+        $manager = self::$container->get('doctrine')->getManager();
+        $manager->createQuery('DELETE FROM AppBundle:Product')->execute();
+        $manager->createQuery('DELETE FROM AppBundle:User')->execute();
+    }
+
+    /**
      * @BeforeSuite
      */
     public static function bootstrapSymfony()
