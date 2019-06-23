@@ -5,12 +5,14 @@ Feature: Product admin area
 
   Scenario: List available products
     Given There are 5 products
+    And I am logged in as an admin
     And I am on "/admin"
+#    And print last response
     When I click "Products"
     Then I should see 5 products
 
   Scenario: Add a new product
-    Given I am  on "/admin/products"
+#    Given I am  on "/admin/products"
     When I click "Products"
     And I fill in "Name" with "velociraptorToy"
     And I fill in "Price" with "20"
